@@ -45,6 +45,7 @@ export default {
         })
         .catch(() => {
           NProgress.done();
+          this.$router.push("network-issue");
         });
     }
   }

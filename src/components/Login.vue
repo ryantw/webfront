@@ -3,6 +3,7 @@
     <h1>Login</h1>
     <v-form>
       <v-text-field
+        prepend-icon="person"
         id="emailAddress"
         v-model="user.username"
         label="Email Address"
@@ -11,6 +12,7 @@
         class="form-control"
       />
       <v-text-field
+        prepend-icon="lock"
         id="password"
         v-model="user.password"
         label="Password"
@@ -43,8 +45,14 @@ export default {
             name: "about"
           });
         })
-        .catch(() => {
+        .catch(error => {
           NProgress.done();
+          console.log(error);
+          if(error.response.status){
+            if(error.response.status == 401){
+              console.log('Login not valid');
+            }
+          }
           this.$router.push("network-issue");
         });
     }

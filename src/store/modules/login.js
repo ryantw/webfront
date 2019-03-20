@@ -39,7 +39,7 @@ export const actions = {
           message: "Your login was unsuccesful"
         };
         */
-        console.log(error);
+        //console.log(error);
         // dispatch message to log
         // throw error so they don't leave login page
         throw error;

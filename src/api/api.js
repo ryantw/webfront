@@ -21,16 +21,18 @@ base.interceptors.request.use(
     return config;
   },
   error => {
-    return Promise.reject(error.response)
+    return Promise.reject(error)
   }
 );
 
 base.interceptors.response.use(
+  //config => config,
   response => {
     NProgress.done();
     return response;
   },
   error => {
+    console.log(error);
     return Promise.reject(error)
   }
 );

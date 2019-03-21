@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <h1>Login</h1>
+    <div v-if="loginError">
+      <h4>The login information you entered was invalid.</h4>
+    </div>
     <v-form>
       <v-text-field
         prepend-icon="person"
@@ -33,11 +36,13 @@ export default {
       user: {
         username: "",
         password: ""
-      }
+      },
+      loginError: false,
     };
   },
   methods: {
     loginUser() {
+      this.loginError = false;
       this.$store
         .dispatch("login/loginUser", this.user)
         .then(() => {
@@ -47,13 +52,13 @@ export default {
         })
         .catch(error => {
           NProgress.done();
-          console.log(error);
-          if(error.response.status){
-            if(error.response.status == 401){
-              console.log('Login not valid');
+          if(!error.response.status){
+            this.$router.push("network-issue");
+          } else {
+            if(error.response.status === 401){
+              this.loginError = true;
             }
           }
-          this.$router.push("network-issue");
         });
     }
   }

@@ -15,7 +15,7 @@ base.interceptors.request.use(
     const token = localStorage.getItem("token");
     if (token) {
       console.log(token);
-      config.headers.authorization = `BEARER ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     NProgress.start();
     return config;

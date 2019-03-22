@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Login from "@/views/Login.vue";
 import NetworkIssue from "@/views/NetworkIssue.vue";
+import UserList from "@/views/UserList.vue";
 import NProgress from "nprogress";
 
 Vue.use(Router);
@@ -23,6 +24,11 @@ const router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path: "/admin/users",
+      name: "userlist",
+      component: UserList
     },
     {
       path: "/network-issue",

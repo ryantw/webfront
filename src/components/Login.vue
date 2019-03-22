@@ -55,7 +55,7 @@ export default {
           if(!error.response.status){
             this.$router.push("network-issue");
           } else {
-            if(error.response.status === 401){
+            if (error.response.status === 401) {
               this.loginError = true;
             }
           }

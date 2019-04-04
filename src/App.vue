@@ -1,10 +1,9 @@
 <template>
-  <v-app>
+  <div id="app">
     <appHeader />
-    <v-content>
-      <router-view />
-    </v-content>
-  </v-app>
+    <button class="button is-primary">This is a button</button>
+    <router-view />
+  </div>
 </template>
 
 <script>

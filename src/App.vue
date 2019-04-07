@@ -1,10 +1,10 @@
 <template>
-  <v-app>
+  <div id="app">
     <appHeader />
-    <v-content>
+    <div id="content">
       <router-view />
-    </v-content>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -16,3 +16,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  #content {
+    background-color: #f4f3ee;
+  }
+</style>
+

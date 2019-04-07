@@ -1,31 +1,43 @@
 <template>
-  <v-container>
-    <h1>Login</h1>
-    <div v-if="loginError">
-      <h4>The login information you entered was invalid.</h4>
+  <div class="container">
+    <h1 class="title">Login</h1>
+    <div class="field">
+      <div class="control has-icons-left has-icons-right">
+        <input 
+          id="username"
+          class="input is-medium" 
+          type="email" 
+          placeholder="Login"
+          v-model="user.username">
+        <span class="icon is-medium is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </div>
     </div>
-    <v-form>
-      <v-text-field
-        prepend-icon="person"
-        id="emailAddress"
-        v-model="user.username"
-        label="Email Address"
-        type="email"
-        name="emailAddress"
-        class="form-control"
-      />
-      <v-text-field
-        prepend-icon="lock"
-        id="password"
-        v-model="user.password"
-        label="Password"
-        type="password"
-        name="password"
-        class="form-control"
-      />
-      <v-btn color="success" @click.prevent="loginUser">Login</v-btn>
-    </v-form>
-  </v-container>
+    <div class="field">
+      <div class="control has-icons-left has-icons-right">
+        <input 
+          id="password"
+          class="input is-medium" 
+          type="password" 
+          placeholder="Password"
+          v-model="user.password">
+        <span class="icon is-medium is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </div>
+    </div>
+    <div class="field">
+      <p class="control">
+        <button 
+          class="button is-success"
+          @click.prevent="loginUser"
+          >
+          Login
+        </button>
+      </p>
+    </div>
+  </div>
 </template>
 
 <script>

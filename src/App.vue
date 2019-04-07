@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <appHeader />
-    <button class="button is-primary">This is a button</button>
-    <router-view />
+    <div id="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -15,3 +16,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  #content {
+    background-color: #f4f3ee;
+  }
+</style>
+

@@ -3,18 +3,17 @@
     <h1 class="title">Users</h1>
     <div class="field is-grouped">
       <p class="control">
-        <button
-          class="button is-success"
-          :to="{name: 'userNew'}"
+        <button class="button is-success" :to="{ name: 'userNew' }">
           >Add New User
         </button>
       </p>
       <p class="control">
         <button
           class="button is-warning"
-          :to="{name: 'userNew'}"
+          :to="{ name: 'userNew' }"
           @click="getUsers()"
-          >Refresh
+        >
+          Refresh
         </button>
       </p>
     </div>
@@ -38,17 +37,14 @@
             <td>
               <div class="field is-grouped">
                 <p class="control">
-                  <button
-                    class="button is-success"
-                    :to="{name: 'userEdit'}"
+                  <button class="button is-success" :to="{ name: 'userEdit' }">
                     >Edit
                   </button>
                 </p>
                 <p class="control">
-                  <button
-                    class="button is-danger"
-                    @click="deleteUser(user.id)"
-                    ><span>Delete</span>
+                  <button class="button is-danger" @click="deleteUser(user.id)">
+                    >
+                    <span>Delete</span>
                     <span class="icon is-small">
                       <i class="fas fa-times"></i>
                     </span>
@@ -63,7 +59,6 @@
     <div v-else>
       <p>No users.</p>
     </div>
-
   </div>
 </template>
 
@@ -71,28 +66,26 @@
 export default {
   data() {
     return {
-      userList: [],
-    }
+      userList: []
+    };
   },
   computed: {
-    users: function(){
-      return this.$store.getters['user/getUsers']
+    users: function() {
+      return this.$store.getters["user/getUsers"];
     }
   },
   methods: {
-    getUsers(){
-      this.$store.dispatch('user/fetchAllUsers')
+    getUsers() {
+      this.$store.dispatch("user/fetchAllUsers");
     },
-    deleteUser(id){
-      console.log(id)
+    deleteUser(id) {
+      console.log(id);
     }
-  }, 
+  },
   created() {
-    this.getUsers()
+    this.getUsers();
   }
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

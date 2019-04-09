@@ -4,7 +4,7 @@
     <div class="field is-grouped">
       <p class="control">
         <button class="button is-success" :to="{ name: 'userNew' }">
-          >Add New User
+          <span>Add New User</span>
         </button>
       </p>
       <p class="control">
@@ -13,7 +13,7 @@
           :to="{ name: 'userNew' }"
           @click="getUsers()"
         >
-          Refresh
+          <span>Refresh</span>
         </button>
       </p>
     </div>
@@ -38,12 +38,11 @@
               <div class="field is-grouped">
                 <p class="control">
                   <button class="button is-success" :to="{ name: 'userEdit' }">
-                    >Edit
+                    <span>Edit</span>
                   </button>
                 </p>
                 <p class="control">
                   <button class="button is-danger" @click="deleteUser(user.id)">
-                    >
                     <span>Delete</span>
                     <span class="icon is-small">
                       <i class="fas fa-times"></i>

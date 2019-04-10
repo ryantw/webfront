@@ -1,5 +1,6 @@
 import axios from "axios";
 import NProgress from "nprogress";
+import router from "../router.js";
 
 const base = axios.create({
   baseURL: `http://localhost:8080`,
@@ -21,6 +22,8 @@ base.interceptors.request.use(
     return config;
   },
   error => {
+    NProgress.done();
+    console.log(error)
     return Promise.reject(error)
   }
 );
@@ -32,8 +35,11 @@ base.interceptors.response.use(
     return response;
   },
   error => {
-    console.log(error);
-    return Promise.reject(error)
+    if(!error.response){
+      router.push("/network-issue");
+    }
+    NProgress.done();
+    return Promise.reject(error);
   }
 );
 

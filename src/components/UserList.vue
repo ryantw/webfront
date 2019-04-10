@@ -37,12 +37,16 @@
             <td>
               <div class="field is-grouped">
                 <p class="control">
-                  <button class="button is-success" :to="{ name: 'userEdit' }">
+                  <router-link
+                    tag="a"
+                    class="button is-success"
+                    :to="{ name: 'userEdit', params: { id: user.id } }"
+                  >
                     <span>Edit</span>
-                  </button>
+                  </router-link>
                 </p>
                 <p class="control">
-                  <button class="button is-danger" @click="deleteUser(user.id)">
+                  <button class="button is-danger" @click="deleteUser(user)">
                     <span>Delete</span>
                     <span class="icon is-small">
                       <i class="fas fa-times"></i>
@@ -77,8 +81,14 @@ export default {
     getUsers() {
       this.$store.dispatch("user/fetchAllUsers");
     },
-    deleteUser(id) {
-      console.log(id);
+    async deleteUser(user) {
+      try {
+        await this.$store.dispatch("user/deleteUser", user);
+        this.getUsers();
+      } catch (e) {
+        this.showError = true;
+        console.log(e);
+      }
     }
   },
   created() {

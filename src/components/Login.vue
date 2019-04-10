@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <h1 class="title">Login</h1>
+    <div class="notification is-danger" v-show="loginError">
+      <button class="delete" @click="loginError = !loginError"></button>
+        Login information is <strong>invalid</strong>. If you've forgotten your password, please reset it.
+    </div>
     <div class="field">
       <div class="control has-icons-left has-icons-right">
         <input
@@ -61,10 +65,10 @@ export default {
         })
         .catch(error => {
           NProgress.done();
-          if (!error.response.status) {
-            this.$router.push("network-issue");
+          if (!error.response) {
+            this.$router.push("/network-issue");
           } else {
-            if (error.response.status === 401) {
+            if (error.response.status && error.response.status === 401) {
               this.loginError = true;
             }
           }

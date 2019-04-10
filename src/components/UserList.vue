@@ -25,15 +25,19 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email Address</th>
+            <th>Enabled?</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
+          <tr v-for="user in sortedUsers" :key="user.id"
+            v-bind:class="{ 'is-disabled': !user.enabled }"
+          >
             <td>{{ user.id }}</td>
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.emailAddress }}</td>
+            <td>{{ user.enabled }}</td>
             <td>
               <div class="field is-grouped">
                 <p class="control">
@@ -75,6 +79,12 @@ export default {
   computed: {
     users: function() {
       return this.$store.getters["user/getUsers"];
+    },
+    isDisabled: function(user){
+      return user.enabled ? 'is-disabled' : '';
+    },
+    sortedUsers: function() {
+      return this.users.sort((a, b) => { return a.id - b.id;});
     }
   },
   methods: {
@@ -97,4 +107,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.table tr.is-disabled {
+  background-color: #909090 !important;
+}
+</style>

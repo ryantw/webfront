@@ -45,8 +45,8 @@ const router = new Router({
     },
     {
       path: "/network-issue",
-      name: "network-issue",
-      component: loadComponent("NetworkIssue")
+      name: "networkIssue",
+      component: loadView("NetworkIssue")
     }
   ]
 });

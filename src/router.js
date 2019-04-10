@@ -1,11 +1,18 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Login from "@/views/Login.vue";
-import NetworkIssue from "@/views/NetworkIssue.vue";
-import UserList from "@/views/UserList.vue";
 import NProgress from "nprogress";
 
 Vue.use(Router);
+
+function loadView(view) {
+  return () =>
+    import(/* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`);
+}
+
+function loadComponent(component) {
+  return () =>
+    import(/* webpackChunkName: "component-[request]" */ `@/components/${component}.vue`);
+}
 
 const router = new Router({
   mode: "history",
@@ -14,7 +21,7 @@ const router = new Router({
     {
       path: "/",
       name: "home",
-      component: Login
+      component: loadComponent("Login")
     },
     {
       path: "/about",
@@ -27,13 +34,19 @@ const router = new Router({
     },
     {
       path: "/admin/users",
-      name: "userlist",
-      component: UserList
+      name: "userList",
+      component: loadComponent("UserList")
+    },
+    {
+      path: "/admin/users/edit/:id",
+      name: "userEdit",
+      component: loadView("UserEdit"),
+      props: true
     },
     {
       path: "/network-issue",
       name: "network-issue",
-      component: NetworkIssue
+      component: loadComponent("NetworkIssue")
     }
   ]
 });

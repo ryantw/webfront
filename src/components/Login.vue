@@ -9,7 +9,7 @@
           type="email"
           placeholder="Login"
           v-model="user.username"
-        />
+        >
         <span class="icon is-medium is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -23,7 +23,7 @@
           type="password"
           placeholder="Password"
           v-model="user.password"
-        />
+        >
         <span class="icon is-medium is-left">
           <i class="fas fa-lock"></i>
         </span>
@@ -31,9 +31,7 @@
     </div>
     <div class="field">
       <p class="control">
-        <button class="button is-success" @click.prevent="loginUser">
-          Login
-        </button>
+        <button class="button is-success" @click.prevent="loginUser">Login</button>
       </p>
     </div>
   </div>
@@ -58,7 +56,7 @@ export default {
         .dispatch("login/loginUser", this.user)
         .then(() => {
           this.$router.push({
-            name: "about"
+            name: "userList"
           });
         })
         .catch(error => {

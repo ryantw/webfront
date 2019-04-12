@@ -50,7 +50,7 @@
                   </router-link>
                 </p>
                 <p class="control">
-                  <button class="button is-danger" @click="deleteUser(user)">
+                  <button class="button is-danger" @click="deleteUser(user.id)">
                     <span>Delete</span>
                     <span class="icon is-small">
                       <i class="fas fa-times"></i>
@@ -66,14 +66,24 @@
     <div v-else>
       <p>No users.</p>
     </div>
+    <ConfirmModal 
+      v-show="showModal"
+      @modalResponse="handleModalResponse"
+      v-bind:class="{ 'is-active': showModal }">
+      <h1 class="title" slot="title">Test Title, Override</h1>
+      <h2 class="subtitle" slot="subtitle">Just a subtitle</h2>
+    </ConfirmModal>
   </div>
 </template>
 
 <script>
+import ConfirmModal from "@/components/ConfirmModal.vue";
+
 export default {
   data() {
     return {
-      userList: []
+      selectedUser: {},
+      showModal: false
     };
   },
   computed: {
@@ -84,25 +94,40 @@ export default {
       return user.enabled ? 'is-disabled' : '';
     },
     sortedUsers: function() {
-      return this.users.sort((a, b) => { return a.id - b.id;});
+      return this.users.slice().sort((a, b) => { return a.id - b.id;});
     }
   },
   methods: {
     getUsers() {
       this.$store.dispatch("user/fetchAllUsers");
     },
-    async deleteUser(user) {
+    async deleteUser(userId) {
+      this.showModal = true;
       try {
-        await this.$store.dispatch("user/deleteUser", user);
-        this.getUsers();
+        this.selectedUser = await this.$store.dispatch("user/fetchUser", userId);
       } catch (e) {
-        this.showError = true;
         console.log(e);
       }
+    },
+    async handleModalResponse(response){
+      this.showModal = false;
+      if(response){
+        try {
+          console.log("handleModal: " + this.selectedUser);
+          await this.$store.dispatch("user/deleteUser", this.selectedUser);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      this.selectedUser = '';
+      this.getUsers();
     }
   },
   created() {
     this.getUsers();
+  },
+  components: {
+    ConfirmModal
   }
 };
 </script>

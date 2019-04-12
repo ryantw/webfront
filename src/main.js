@@ -1,5 +1,4 @@
 import Vue from "vue";
-import "./plugins/vuetify";
 import "nprogress/nprogress.css";
 import App from "./App.vue";
 import router from "./router";

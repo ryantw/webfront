@@ -39,6 +39,29 @@
         />
       </div>
     </div>
+    <div class="field">
+      <label for="userEnabled" class="label">User Active</label>
+      <div class="control">
+        <label class="radio">
+          <input 
+            type="radio" 
+            id="userEnabled" 
+            name="enabled"
+            value="true"
+            v-model="user.enabled">
+            Enabled
+        </label>
+        <label class="radio">
+          <input 
+            type="radio" 
+            id="userEnabled" 
+            name="enabled"
+            value="false"
+            v-model="user.enabled">
+            Disabled
+        </label>
+      </div>
+    </div>
     <div class="field is-grouped">
       <div class="control">
         <button class="button is-success" @click.prevent="saveUser()">
@@ -54,11 +77,23 @@
         </button>
       </div>
     </div>
+    <ConfirmModal 
+      v-show="showModal"
+      @modalResponse="handleModalResponse"
+      v-bind:class="{ 'is-active': showModal }">
+      <h1 class="title" slot="title">Disable User</h1>
+      <h2 class="subtitle" slot="subtitle">Disabling the user will not allow them to login anymore.</h2>
+    </ConfirmModal>
   </div>
 </template>
 
 <script>
+import ConfirmModal from "@/components/ConfirmModal.vue";
+
 export default {
+  components: {
+    ConfirmModal
+  },
   props: {
     id: {
       type: [Number, String],
@@ -68,14 +103,17 @@ export default {
   data() {
     return {
       user: {
+        id: "",
         firstName: "",
         lastName: "",
         emailAddress: "",
+        enabled: true,
         role: ""
       },
       userSaving: false,
       usedSaved: false,
-      showError: false
+      showError: false,
+      showModal: false
     };
   },
   created() {
@@ -94,20 +132,34 @@ export default {
       }
     },
     async saveUser() {
+      let savedUser = {};
       try {
-        await this.$store.dispatch("user/saveUser", this.user);
+        savedUser = await this.$store.dispatch("user/saveUser", this.user);
+        this.user = savedUser;
       } catch (e) {
         this.showError = true;
         console.log(e);
       }
     },
-    async deleteUser() {
+    async deleteUser(userId) {
+      this.showModal = true;
       try {
-        await this.$store.dispatch("user/deleteUser", this.user);
+        await this.$store.dispatch("user/fetchUser", userId);
       } catch (e) {
-        this.showError = true;
         console.log(e);
       }
+    },
+    async handleModalResponse(response){
+      this.showModal = false;
+      if(response){
+        try {
+          console.log("handleModal: " + this.user);
+          await this.$store.dispatch("user/deleteUser", this.user);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      this.getUser();
     }
   }
 };

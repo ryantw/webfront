@@ -70,8 +70,8 @@
       v-show="showModal"
       @modalResponse="handleModalResponse"
       v-bind:class="{ 'is-active': showModal }">
-      <h1 class="title" slot="title">Test Title, Override</h1>
-      <h2 class="subtitle" slot="subtitle">Just a subtitle</h2>
+      <h1 class="title" slot="title">Disable User</h1>
+      <h2 class="subtitle" slot="subtitle">Disabling the user will not allow them to login anymore.</h2>
     </ConfirmModal>
   </div>
 </template>

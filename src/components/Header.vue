@@ -6,7 +6,7 @@
       aria-label="main navigation"
     >
       <div class="navbar-brand" v-on:click="showNav = !showNav">
-        <router-link tag="a" to="/" class="navbar-item">PW&P ADMIN</router-link>
+        <router-link tag="a" to="/" class="navbar-item">PW&P</router-link>
         <a
           role="button"
           class="navbar-burger burger"
@@ -48,7 +48,8 @@
               >
             </div>
           </div>
-          <router-link tag="a" to="/" class="navbar-item">LOGIN</router-link>
+          <router-link v-if="!isLoggedIn" tag="a" to="/" class="navbar-item">LOGIN</router-link>
+          <router-link v-else tag="a" to="/logout" class="navbar-item">LOGOUT</router-link>
         </div>
       </div>
     </nav>
@@ -61,6 +62,14 @@ export default {
     return {
       showNav: false
     };
+  },
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters['login/getLoggedIn'];
+    },
+    logoutUser: function() {
+      return this.$store.dispatch("login/logoutUser");
+    }
   }
 };
 </script>

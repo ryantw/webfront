@@ -2,14 +2,22 @@ import LoginService from "@/services/LoginService.js";
 
 export const namespaced = true;
 
+const initialUser = localStorage.getItem('token');
+const tokenExists = initialUser ? true : false;
+
 export const state = {
-  loggedIn: false,
+  loggedIn: tokenExists,
   user: {}
 };
 
 export const mutations = {
   USER_LOGIN(state) {
     state.loggedIn = true;
+  },
+  USER_LOGOUT(state) {
+    state.loggedIn = false;
+    state.user = {};
+    localStorage.removeItem('token');
   },
   SET_USER(state, user) {
     state.user = user;
@@ -23,7 +31,7 @@ export const actions = {
         console.log(response);
         localStorage.setItem("token", response.data.access_token);
         commit("USER_LOGIN");
-        commit("SET_USER", user.username);
+        commit("SET_USER", user);
         /*
         const notification = {
           type: "success",
@@ -44,6 +52,9 @@ export const actions = {
         // throw error so they don't leave login page
         throw error;
       });
+  },
+  logoutUser({commit}) {
+    commit("USER_LOGOUT");
   }
 };
 

@@ -24,6 +24,16 @@ const router = new Router({
       component: loadComponent("Login")
     },
     {
+      path: "/login",
+      name: "login",
+      component: loadComponent("Login")
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      component: loadView("Logout")
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
@@ -53,6 +63,14 @@ const router = new Router({
 
 router.beforeEach((routeTo, routeFrom, next) => {
   NProgress.start();
+  const publicPages = ['/login', '/logout', 'network-issue'];
+  const authRequired = !publicPages.includes(routeTo.path);
+  const loggedIn = localStorage.getItem('token');
+
+  if(authRequired && !loggedIn){
+    return next('/login');
+  }
+  
   next();
 });
 

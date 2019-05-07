@@ -68,6 +68,7 @@ router.beforeEach((routeTo, routeFrom, next) => {
   const loggedIn = localStorage.getItem('token');
 
   if(authRequired && !loggedIn){
+    NProgress.done();
     return next('/login');
   }
   

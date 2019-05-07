@@ -13,6 +13,7 @@
           type="email"
           placeholder="Login"
           v-model="user.username"
+          :class="{'is-danger' : $v.user.username.$error }"
         >
         <span class="icon is-medium is-left">
           <i class="fas fa-envelope"></i>
@@ -27,6 +28,7 @@
           type="password"
           placeholder="Password"
           v-model="user.password"
+          :class="{'is-danger' : $v.user.password.$error }"
         >
         <span class="icon is-medium is-left">
           <i class="fas fa-lock"></i>
@@ -43,6 +45,8 @@
 
 <script>
 import NProgress from "nprogress";
+import { required, email } from "vuelidate/lib/validators";
+
 export default {
   data() {
     return {
@@ -53,9 +57,21 @@ export default {
       loginError: false
     };
   },
+  validations: {
+    user : {
+      username: { required, email },
+      password: { required }
+    }
+  },
   methods: {
     loginUser() {
       this.loginError = false;
+
+      this.$v.$touch();
+      if(this.$v.$invalid){
+        return;
+      }
+
       this.$store
         .dispatch("login/loginUser", this.user)
         .then(() => {

@@ -13,16 +13,16 @@ export const mutations = {
 };
 
 export const actions = {
-  fetchAllUsers({ commit }) {
+  async fetchAllUsers({ commit }) {
     let users = [];
-    return UserService.fetchAllUsers()
-      .then(response => {
-        users = response.data;
-        commit("setUsers", users);
-      })
-      .catch(error => {
-        throw error;
-      });
+    try {
+      const userResponse = await UserService.fetchAllUsers();
+      users = userResponse.data;
+    } catch (e) {
+      console.log("failed to get users", e)
+    } finally {
+      commit("setUsers", users);
+    }
   },
   fetchUser({ commit }, id) {
     let user = {};

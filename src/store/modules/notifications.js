@@ -6,7 +6,7 @@ export const state = {
     { id: 1, type: 'is-info', message: 'Well this is some bullshit.'},
     { id: 2, type: 'is-primary', message: 'Guess the kids are going to spend all my money!'}
   ],
-  showNoticeIndex: 0,
+  showNoticeIndex: 2,
   numberNotifications: 0
 };
 

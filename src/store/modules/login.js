@@ -26,6 +26,7 @@ export const mutations = {
 
 export const actions = {
   loginUser({ commit }, user) {
+    commit("USER_LOGOUT");
     return LoginService.loginAttempt(user)
       .then(response => {
         console.log(response);

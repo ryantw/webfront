@@ -29,13 +29,14 @@ base.interceptors.request.use(
 );
 
 base.interceptors.response.use(
-  //config => config,
   response => {
     NProgress.done();
     return response;
   },
   error => {
-    if(!error.response){
+    if(error.response.status && error.response.status === 401){
+      router.push("/login");
+    } else {
       router.push("/network-issue");
     }
     NProgress.done();

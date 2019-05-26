@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import UserService from "@/services/UserService.js";
 
 export const namespaced = true;
@@ -19,7 +20,7 @@ export const actions = {
       const userResponse = await UserService.fetchAllUsers();
       users = userResponse.data;
     } catch (e) {
-      console.log("failed to get users", e)
+      console.log("failed to get users", e);
     } finally {
       commit("setUsers", users);
     }
@@ -49,7 +50,7 @@ export const actions = {
   deleteUser({ commit }, user) {
     return UserService.deleteUser(user)
       .then(response => {
-        return true;
+        return response;
       })
       .catch(error => {
         throw error;

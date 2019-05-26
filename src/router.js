@@ -54,6 +54,11 @@ const router = new Router({
       props: true
     },
     {
+      path: "/admin/products",
+      name: "storeProducts",
+      component: loadView("StoreProducts")
+    },
+    {
       path: "/network-issue",
       name: "networkIssue",
       component: loadView("NetworkIssue")
@@ -63,15 +68,15 @@ const router = new Router({
 
 router.beforeEach((routeTo, routeFrom, next) => {
   NProgress.start();
-  const publicPages = ['/login', '/logout', 'network-issue'];
+  const publicPages = ["/login", "/logout", "/network-issue"];
   const authRequired = !publicPages.includes(routeTo.path);
-  const loggedIn = localStorage.getItem('token');
+  const loggedIn = localStorage.getItem("token");
 
-  if(authRequired && !loggedIn){
+  if (authRequired && !loggedIn) {
     NProgress.done();
-    return next('/login');
+    return next("/login");
   }
-  
+
   next();
 });
 

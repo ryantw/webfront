@@ -43,22 +43,24 @@
       <label for="userEnabled" class="label">User Active</label>
       <div class="control">
         <label class="radio">
-          <input 
-            type="radio" 
-            id="userEnabled" 
+          <input
+            type="radio"
+            id="userEnabled"
             name="enabled"
             value="true"
-            v-model="user.enabled">
-            Enabled
+            v-model="user.enabled"
+          />
+          Enabled
         </label>
         <label class="radio">
-          <input 
-            type="radio" 
-            id="userEnabled" 
+          <input
+            type="radio"
+            id="userEnabled"
             name="enabled"
             value="false"
-            v-model="user.enabled">
-            Disabled
+            v-model="user.enabled"
+          />
+          Disabled
         </label>
       </div>
     </div>
@@ -77,12 +79,15 @@
         </button>
       </div>
     </div>
-    <ConfirmModal 
+    <ConfirmModal
       v-show="showModal"
       @modalResponse="handleModalResponse"
-      v-bind:class="{ 'is-active': showModal }">
+      v-bind:class="{ 'is-active': showModal }"
+    >
       <h1 class="title" slot="title">Disable User</h1>
-      <h2 class="subtitle" slot="subtitle">Disabling the user will not allow them to login anymore.</h2>
+      <h2 class="subtitle" slot="subtitle">
+        Disabling the user will not allow them to login anymore.
+      </h2>
     </ConfirmModal>
   </div>
 </template>
@@ -149,9 +154,9 @@ export default {
         console.log(e);
       }
     },
-    async handleModalResponse(response){
+    async handleModalResponse(response) {
       this.showModal = false;
-      if(response){
+      if (response) {
         try {
           console.log("handleModal: " + this.user);
           await this.$store.dispatch("user/deleteUser", this.user);

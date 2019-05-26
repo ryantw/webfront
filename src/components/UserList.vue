@@ -4,15 +4,11 @@
     <div class="field is-grouped">
       <p class="control">
         <button class="button is-success" :to="{ name: 'userNew' }">
-          <span>Add New User</span>
+          <span>Add User</span>
         </button>
       </p>
       <p class="control">
-        <button
-          class="button is-warning"
-          :to="{ name: 'userNew' }"
-          @click="getUsers()"
-        >
+        <button class="button is-warning" @click="getUsers()">
           <span>Refresh</span>
         </button>
       </p>
@@ -30,7 +26,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in sortedUsers" :key="user.id"
+          <tr
+            v-for="user in sortedUsers"
+            :key="user.id"
             v-bind:class="{ 'is-disabled': !user.enabled }"
           >
             <td>{{ user.id }}</td>
@@ -66,12 +64,15 @@
     <div v-else>
       <p>No users.</p>
     </div>
-    <ConfirmModal 
+    <ConfirmModal
       v-show="showModal"
       @modalResponse="handleModalResponse"
-      v-bind:class="{ 'is-active': showModal }">
+      v-bind:class="{ 'is-active': showModal }"
+    >
       <h1 class="title" slot="title">Disable User</h1>
-      <h2 class="subtitle" slot="subtitle">Disabling the user will not allow them to login anymore.</h2>
+      <h2 class="subtitle" slot="subtitle">
+        Disabling the user will not allow them to login anymore.
+      </h2>
     </ConfirmModal>
   </div>
 </template>
@@ -90,11 +91,13 @@ export default {
     users: function() {
       return this.$store.getters["user/getUsers"];
     },
-    isDisabled: function(user){
-      return user.enabled ? 'is-disabled' : '';
+    isDisabled: function(user) {
+      return user.enabled ? "is-disabled" : "";
     },
     sortedUsers: function() {
-      return this.users.slice().sort((a, b) => { return a.id - b.id;});
+      return this.users.slice().sort((a, b) => {
+        return a.id - b.id;
+      });
     }
   },
   methods: {
@@ -104,14 +107,17 @@ export default {
     async deleteUser(userId) {
       this.showModal = true;
       try {
-        this.selectedUser = await this.$store.dispatch("user/fetchUser", userId);
+        this.selectedUser = await this.$store.dispatch(
+          "user/fetchUser",
+          userId
+        );
       } catch (e) {
         console.log(e);
       }
     },
-    async handleModalResponse(response){
+    async handleModalResponse(response) {
       this.showModal = false;
-      if(response){
+      if (response) {
         try {
           console.log("handleModal: " + this.selectedUser);
           await this.$store.dispatch("user/deleteUser", this.selectedUser);
@@ -119,7 +125,7 @@ export default {
           console.log(e);
         }
       }
-      this.selectedUser = '';
+      this.selectedUser = "";
       this.getUsers();
     }
   },

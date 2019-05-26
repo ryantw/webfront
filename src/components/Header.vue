@@ -32,7 +32,9 @@
             >USERS</router-link
           >
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">PRODUCTS</a>
+            <router-link tag="a" to="/admin/products" class="navbar-link"
+              >PRODUCTS</router-link
+            >
             <div class="navbar-dropdown">
               <router-link
                 tag="a"
@@ -48,8 +50,12 @@
               >
             </div>
           </div>
-          <router-link v-if="!isLoggedIn" tag="a" to="/" class="navbar-item">LOGIN</router-link>
-          <router-link v-else tag="a" to="/logout" class="navbar-item">LOGOUT</router-link>
+          <router-link v-if="!isLoggedIn" tag="a" to="/" class="navbar-item"
+            >LOGIN</router-link
+          >
+          <router-link v-else tag="a" to="/logout" class="navbar-item"
+            >LOGOUT</router-link
+          >
         </div>
       </div>
     </nav>
@@ -65,7 +71,7 @@ export default {
   },
   computed: {
     isLoggedIn: function() {
-      return this.$store.getters['login/getLoggedIn'];
+      return this.$store.getters["login/getLoggedIn"];
     },
     logoutUser: function() {
       return this.$store.dispatch("login/logoutUser");

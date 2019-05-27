@@ -14,7 +14,56 @@
       </p>
     </div>
     <div v-if="products.length > 0">
-      <p>We got products</p>
+      <table class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>On Webpage</td>
+            <td>Actions</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="product in sorted"
+            :key="product.id"
+            v-bind:class="{ 'is-disabled': !product.displayOnWebpage }"
+          >
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.displayOnWebpage }}</td>
+            <td>
+              <div class="field is-grouped">
+                <p class="control">
+                  <router-link
+                    tag="a"
+                    class="button is-success"
+                    :to="{ name: 'productEdit', params: { id: product.id } }"
+                  >
+                    <span>Edit</span>
+                  </router-link>
+                </p>
+                <p class="control">
+                  <button
+                    class="button is-danger"
+                    @click="deleteProduct(product.id)"
+                  >
+                    <span>Delete</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-times"></i>
+                    </span>
+                  </button>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-else>
+      <p>No products</p>
     </div>
     <ConfirmModal
       v-show="showModal"
@@ -52,6 +101,17 @@ export default {
   methods: {
     getProducts() {
       this.$store.dispatch("products/fetchAllProducts");
+    },
+    async deleteProduct(id) {
+      this.showModal = true;
+      try {
+        this.selectedProduct = await this.$store.dispatch(
+          "product/fetchProduct",
+          id
+        );
+      } catch (e) {
+        console.log(e);
+      }
     },
     async handleModalResponse(response) {
       this.showModal = false;

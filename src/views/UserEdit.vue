@@ -94,6 +94,7 @@
 
 <script>
 import ConfirmModal from "@/components/ConfirmModal.vue";
+import NProgress from "nprogress";
 
 export default {
   components: {
@@ -139,11 +140,14 @@ export default {
     async saveUser() {
       let savedUser = {};
       try {
+        NProgress.start();
         savedUser = await this.$store.dispatch("user/saveUser", this.user);
         this.user = savedUser;
       } catch (e) {
         this.showError = true;
         console.log(e);
+      } finally {
+        NProgress.done();
       }
     },
     async deleteUser(userId) {

@@ -59,6 +59,12 @@ const router = new Router({
       component: loadView("StoreProducts")
     },
     {
+      path: "/admin/products/edit/:id",
+      name: "productEdit",
+      component: loadView("ProductEdit"),
+      props: true
+    },
+    {
       path: "/network-issue",
       name: "networkIssue",
       component: loadView("NetworkIssue")

@@ -22,6 +22,16 @@ export const actions = {
     } finally {
       commit("setProducts", products);
     }
+  },
+  async fetchProduct({ commit }, id) {
+    let product = [];
+    try {
+      const response = await ProductService.fetchProduct(id);
+      product = response.data;
+    } catch (e) {
+      console.log("failed to get product: " + id + ", ", e);
+    }
+    return product;
   }
 };
 export const getters = {
